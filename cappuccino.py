@@ -1,16 +1,21 @@
 import sqlite3
 import sys
-
+import main_ui
+import addEditCoffeeForm_ui
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMessageBox, QInputDialog
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 
 
-class DBSample(QMainWindow):
+# from main_ui import Ui_MainWindow
+# from addEditCoffeeForm_ui import Ui_MainWindow
+
+class DBSample(QMainWindow, main_ui.Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        self.connection = sqlite3.connect("coffee.sqlite")
+        self.setupUi(self)
+        # uic.loadUi('main.ui', self)
+        self.connection = sqlite3.connect("data/coffee.sqlite")
         self.pushButton.clicked.connect(self.select_data)
         self.textEdit.setPlainText("SELECT * FROM coffee_list")
         self.select_data()
@@ -41,11 +46,12 @@ class DBSample(QMainWindow):
         self.connection.close()
 
 
-class DBSample1(QMainWindow):
+class DBSample1(QMainWindow, addEditCoffeeForm_ui.Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
-        self.con = sqlite3.connect("coffee.sqlite")
+        self.setupUi(self)
+        # uic.loadUi('addEditCoffeeForm.ui', self)
+        self.con = sqlite3.connect("data/coffee.sqlite")
         self.pushButton_z.clicked.connect(self.update_result)
         self.tableWidget_1.itemChanged.connect(self.item_changed)
         self.pushButton_s.clicked.connect(self.save_results)
